@@ -3,6 +3,20 @@
            https://api.github.com/users/<your name>
 */
 
+const enter = document.querySelector('.cards')
+axios.get("https://api.github.com/users/Faisal1440")
+.then(response => {
+  console.log(response.data);
+  const mycard = usercard(response.data)
+  enter.appendChild('mycard')
+})
+
+
+.catch(error => {
+  console.log("This is working")
+});
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +59,61 @@ const followersArray = [];
 </div>
 
 */
+
+//step 3: Create a function that accepts a single object as its only argument,
+
+
+function usercard(object) {
+
+  const card = document.createElement('div'); //<div class="card">
+  const profileImage = document.createElement('img'); //<img src={image url of user} />
+  const cardInfo = document.createElement('div'); //<div class="card-info">
+    
+  const name = document.createElement('h3'); //<h3 class="name">{users name}</h3>
+  const userName = document.createElement('p');//<p class="username">{users user name}</p>
+  const location = document.createElement('p');//<p>Location: {users location}</p>
+  const profile = document.createElement('p');//<p>Profile: 
+  const profileLink = document.createElement('a');//<a href={address to users github page}>{address to users github page}</a>
+  const followers = document.createElement('p');//<p>Followers: {users followers count}</p>
+  const following = document.createElement('p');//<p>Following: {users following count}</p>
+  const bio = document.createElement('p');//<p>Bio: {users bio}</p>
+
+//append CHILD
+
+  card.appendChild(profileImage);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+//ASSIGN CLASSES
+
+  card.classList.add('card');//<div class="card">
+  cardInfo.classList.add('card-info');//<div class="card-info">
+  name.classList.add('name');//<h3 class="name">{users name}</h3>
+  userName.classList.add('username');//<p class="username">{users user name}</p>
+
+
+//TEXT_CONTENT
+
+  profileImage.src = object.avatar_url;//profileImage = document.createElement('img')
+  name.textContent = object.name;//name = document.createElement('h3')
+  userName.textContent = object.login
+  location.textContent = object.location;
+  profileLink.textContent = object.html_url;
+  // profileLink.href = object.html_url;
+  followers.textContent = object.followers;
+  following.textContent = object.following;
+  bio.textContent = object.bio;
+
+  return card;
+
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
